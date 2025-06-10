@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <h2>Daftar Pedoman</h2>
+  <!-- Tombol -->
+  <button
+    class="btn btn-primary mb-3 shadow"
+    data-bs-toggle="modal"
+    data-bs-target="#modalTambah"
+  >
+    ➕ Tambah Pedoman
+  </button>
+
+  <table id="table-pedoman" class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="bg-success text-white text-center">No</th>
+        <th class="bg-success text-white text-center">Keterangan</th>
+        <th class="bg-success text-white text-center">Dokumen</th>
+      </tr>
+    </thead>
+    <tbody id="tabel-pedoman">
+      <!-- Data dari Firebase -->
+    </tbody>
+  </table>
+</div>
+<script type="module" src="firebase-pedoman.js"></script>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalTambah"
+  tabindex="-1"
+  aria-labelledby="modalTambahLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form id="formTambah" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTambahLabel">Tambah Pedoman</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Tutup"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group mb-3">
+          <label for="keterangan">Keterangan</label>
+          <input type="text" class="form-control" id="keterangan" required />
+        </div>
+        <div class="form-group mb-3">
+          <label for="filepdf">File PDF</label>
+          <input
+            type="file"
+            class="form-control"
+            id="filepdf"
+            accept="application/pdf"
+            required
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="submit" class="btn btn-success">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
