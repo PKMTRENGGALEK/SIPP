@@ -76,10 +76,9 @@
       const updatedData = {
         action: "edit",
         index: index,
-        Nama_laporan: $("#editNama").val().trim(),
-        Jenis_laporan: $("#editUsername").val().trim(),
-        No: $("#editNIP").val().trim(),
-        link_laporan: $("#editJabatan").val().trim(),
+        Name: $("#editNama").val().trim(),
+        URL: $("#editURL").val().trim(),
+        
       };
 
       Swal.fire({
@@ -147,10 +146,9 @@
   window.editData = function (index) {
     const row = globalData[index];
     $("#editIndex").val(index);
-    $("#editNama").val(row["Nama_laporan"]);
-    $("#editUsername").val(row["Jenis_laporan"]);
-    $("#editNIP").val(row["No"]);
-    $("#editJabatan").val(row["link_laporan"]);
+    $("#editNama").val(row["Name"]);
+    $("#editURL").val(row["URL"]);
+    
     $("#editModal").modal("show");
   };
 
