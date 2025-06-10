@@ -415,14 +415,21 @@
 
 <script type="text/javascript">
   function loadContent(page) {
+    const contents = document.getElementById("contents");
+
     // Tampilkan spinner
-    document.getElementById("contents").innerHTML = `
-      <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
-        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+    contents.innerHTML = `
+    <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
       </div>
-    `;
+    </div>
+  `;
+
+    // Hapus semua script halaman sebelumnya
+    document
+      .querySelectorAll("script[data-page-script]")
+      .forEach((script) => script.remove());
 
     fetch("pages/" + page)
       .then((res) => {
@@ -433,28 +440,17 @@
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
-        // Ambil isi <body>
-        const newContent = doc.body.innerHTML;
-        document.getElementById("contents").innerHTML = newContent;
+        contents.innerHTML = doc.body.innerHTML;
 
-        // Ambil dan sisipkan ulang semua <script> eksternal & inline
-        doc.querySelectorAll("script").forEach((script) => {
-          const newScript = document.createElement("script");
-          newScript.type = script.type || "text/javascript";
+        // Muat ulang JS halaman jika ada file JS sesuai nama halaman
+        const pageName = page.split(".")[0];
+        const script = document.createElement("script");
+        script.src = `pages/${pageName}.js`;
+        script.setAttribute("data-page-script", "true");
+        script.defer = true;
+        document.body.appendChild(script);
 
-          if (script.src) {
-            // Cek apakah sudah dimuat sebelumnya
-            if (!document.querySelector(`script[src="${script.src}"]`)) {
-              newScript.src = script.src;
-              document.body.appendChild(newScript);
-            }
-          } else {
-            newScript.textContent = script.textContent;
-            document.body.appendChild(newScript);
-          }
-        });
-
-        // Ambil dan sisipkan ulang semua <link rel="stylesheet">
+        // Tambahkan <link rel="stylesheet"> baru jika belum ada
         doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
           if (!document.querySelector(`link[href="${link.href}"]`)) {
             const newLink = document.createElement("link");
@@ -464,14 +460,12 @@
           }
         });
 
-        // Re-inisialisasi komponen Bootstrap dan AOS jika ada
-        initBootstrap5Modals();
+        // Inisialisasi ulang Bootstrap dan AOS jika ada
+        if (typeof initBootstrap5Modals === "function") initBootstrap5Modals();
         if (window.AOS) AOS.init();
       })
       .catch((err) => {
-        document.getElementById(
-          "contents"
-        ).innerHTML = `<div class="alert alert-danger mt-3">Error: ${err.message}</div>`;
+        contents.innerHTML = `<div class="alert alert-danger mt-3">Error: ${err.message}</div>`;
       });
   }
 
