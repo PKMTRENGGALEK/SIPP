@@ -11,7 +11,7 @@
       .then((res) => res.json())
       .then((data) => {
         globalData = data;
-        renderTable(data);
+        renderTable(globalData);
         hideLoading();
         showSuccessToast("Data berhasil dimuat.");
       })
@@ -20,8 +20,22 @@
         hideLoading();
       });
 
+    // Submit form tambah
     $("#addForm").on("submit", function (e) {
       e.preventDefault();
+
+      const newData = {
+        action: "add",
+        Nama_laporan: $("#addNama").val().trim(),
+        Jenis_laporan: $("#addUsername").val().trim(),
+        No: $("#addNIP").val().trim(),
+        link_laporan: $("#addJabatan").val().trim(),
+      };
+
+      if (!newData.Nama_laporan || !newData.Jenis_laporan || !newData.No) {
+        Swal.fire("Gagal", "Mohon isi semua field wajib.", "warning");
+        return;
+      }
 
       Swal.fire({
         title: "Menyimpan...",
@@ -29,14 +43,6 @@
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
       });
-
-      const newData = {
-        action: "add",
-        Nama_laporan: $("#addNama").val(),
-        Jenis_laporan: $("#addUsername").val(),
-        No: $("#addNIP").val(),
-        link_laporan: $("#addJabatan").val(),
-      };
 
       const formData = new FormData();
       for (const key in newData) {
@@ -54,18 +60,29 @@
             renderTable(globalData);
             $("#addForm")[0].reset();
           } else {
-            Swal.fire("Gagal!", res.message, "error");
+            Swal.fire("Gagal!", res.message || "Gagal menambahkan data.", "error");
           }
         })
         .catch((err) => {
           Swal.close();
-          Swal.fire("Error!", "Terjadi kesalahan saat menambahkan.", "error");
+          Swal.fire("Error!", "Terjadi kesalahan saat menambahkan data.", "error");
           console.error(err);
         });
     });
 
+    // Submit form edit
     $("#editForm").on("submit", function (e) {
       e.preventDefault();
+
+      const index = $("#editIndex").val();
+      const updatedData = {
+        action: "edit",
+        index: index,
+        Nama_laporan: $("#editNama").val().trim(),
+        Jenis_laporan: $("#editUsername").val().trim(),
+        No: $("#editNIP").val().trim(),
+        link_laporan: $("#editJabatan").val().trim(),
+      };
 
       Swal.fire({
         title: "Menyimpan perubahan...",
@@ -73,16 +90,6 @@
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
       });
-
-      const index = $("#editIndex").val();
-      const updatedData = {
-        action: "edit",
-        index: index,
-        Nama_laporan: $("#editNama").val(),
-        Jenis_laporan: $("#editUsername").val(),
-        No: $("#editNIP").val(),
-        link_laporan: $("#editJabatan").val(),
-      };
 
       const formData = new FormData();
       for (const key in updatedData) {
@@ -99,7 +106,7 @@
             globalData[index] = { ...globalData[index], ...updatedData };
             renderTable(globalData);
           } else {
-            Swal.fire("Gagal!", res.message, "error");
+            Swal.fire("Gagal!", res.message || "Gagal menyimpan data.", "error");
           }
         })
         .catch((err) => {
@@ -115,16 +122,13 @@
       $("#karyawanTable").DataTable().destroy();
     }
 
-    let tableBody = "";
-    data.forEach((row, index) => {
+    const tableBody = data.map((row, index) => {
       const link = row["link_laporan"];
       const linkHTML = link
-        ? `<a href="${link}" target="_blank" class="badge bg-primary text-decoration-none">
-            <i class="bi bi-link-45deg"></i> Kunjungi
-          </a>`
+        ? `<a href="${link}" target="_blank" class="badge bg-primary text-decoration-none"><i class="bi bi-link-45deg"></i> Kunjungi</a>`
         : `<span class="text-muted">-</span>`;
 
-      tableBody += `
+      return `
         <tr>
           <td>${row["No"] || ""}</td>
           <td>${row["Jenis_laporan"] || ""}</td>
@@ -135,13 +139,14 @@
             <button class="btn btn-sm btn-danger" onclick="deleteData(${index})">Hapus</button>
           </td>
         </tr>`;
-    });
+    }).join("");
 
     $("#karyawanTable tbody").html(tableBody);
     $("#karyawanTable").DataTable();
   }
 
-  function editData(index) {
+  // Fungsi edit
+  window.editData = function (index) {
     const row = globalData[index];
     $("#editIndex").val(index);
     $("#editNama").val(row["Nama_laporan"]);
@@ -149,10 +154,12 @@
     $("#editNIP").val(row["No"]);
     $("#editJabatan").val(row["link_laporan"]);
     $("#editModal").modal("show");
-  }
+  };
 
-  function deleteData(index) {
+  // Fungsi hapus
+  window.deleteData = function (index) {
     const row = globalData[index];
+
     Swal.fire({
       title: `Hapus laporan "${row["Nama_laporan"]}"?`,
       text: "Data akan dihapus dari Google Sheet.",
@@ -186,7 +193,7 @@
               globalData.splice(index, 1);
               renderTable(globalData);
             } else {
-              Swal.fire("Gagal!", res.message, "error");
+              Swal.fire("Gagal!", res.message || "Gagal menghapus data.", "error");
             }
           })
           .catch((err) => {
@@ -196,8 +203,9 @@
           });
       }
     });
-  }
+  };
 
+  // Toast sukses
   function showSuccessToast(msg) {
     $("#toastBody").text(msg);
     const toastEl = document.getElementById("successToast");
@@ -207,12 +215,14 @@
     }
   }
 
+  // Loading
   function showLoading() {
     $("#karyawanTable tbody").html(
       `<tr><td colspan="5" class="text-center">Memuat data...</td></tr>`
     );
   }
+
   function hideLoading() {
-    // Tidak perlu isi, renderTable akan overwrite
+    // Tidak perlu isi, karena renderTable akan overwrite.
   }
 })();
