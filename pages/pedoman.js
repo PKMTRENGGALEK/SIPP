@@ -1,6 +1,6 @@
 (() => {
   const scriptURL =
-    "https://script.google.com/macros/s/AKfycbyxTA07xmCSWpkqngCeoF1KwypbYwu2ax0YMoLDYpT5ZdZ6m1WAR44szMy2pLjTrDAizQ/exec";
+    "https://script.google.com/macros/s/AKfycbwza69B5neACyqTIuFD8wVWOLUtWwItCjLFiqKtrNtUxnMMpzv-yeWP0W1wGtZ02LLn/exec";
   let pedomanData = [];
   let selectedIndex = -1;
 
@@ -13,52 +13,6 @@
         document.getElementById("confirmDeleteModal")
       );
       modal.hide();
-    });
-
-    $("#addForm").submit(function (e) {
-      e.preventDefault();
-      const fileInput = document.getElementById("addFile");
-      const file = fileInput.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function () {
-        const base64 = reader.result.split(",")[1];
-        const formData = new FormData();
-        formData.append("action", "add");
-        formData.append("filename", file.name);
-        formData.append("file", base64);
-        formData.append("mimeType", file.type);
-        formData.append("keterangan", $("#addKeterangan").val());
-
-        Swal.fire({
-          title: "Mengunggah...",
-          allowOutsideClick: false,
-          didOpen: () => Swal.showLoading(),
-        });
-
-        fetch(scriptURL, { method: "POST", body: formData })
-          .then((res) => res.json())
-          .then((res) => {
-            Swal.close();
-            if (res.success) {
-              $("#addForm")[0].reset();
-              bootstrap.Modal.getInstance(
-                document.getElementById("addModal")
-              ).hide();
-              showToast("Data berhasil ditambahkan.");
-              loadPedoman();
-            } else {
-              Swal.fire("Gagal", res.message, "error");
-            }
-          })
-          .catch((err) => {
-            Swal.close();
-            Swal.fire("Error", "Terjadi kesalahan.", "error");
-            console.error(err);
-          });
-      };
-      reader.readAsDataURL(file);
     });
   });
 
