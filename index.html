@@ -446,17 +446,11 @@
  
 
 <script>
-  function loadContent(page) {
+  function loadContent(page, queryString = "") {
     const contents = document.getElementById("contents");
 
-    // Tampilkan spinner
-    contents.innerHTML = `
-      <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
-        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    `;
+    // Kosongkan konten (tanpa spinner)
+    contents.innerHTML = "";
 
     // Hapus semua script halaman sebelumnya
     document.querySelectorAll("script[data-page-script]").forEach((script) => script.remove());
@@ -470,17 +464,25 @@
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
+        // Masukkan HTML ke kontainer
         contents.innerHTML = doc.body.innerHTML;
 
-        // Muat ulang JS halaman jika ada file JS sesuai nama halaman
+        // Load JS jika ada
         const pageName = page.split(".")[0];
         const script = document.createElement("script");
         script.src = `pages/${pageName}.js`;
         script.setAttribute("data-page-script", "true");
         script.defer = true;
+
+        // Simpan query string agar bisa diakses dari halaman
+        window.pageQuery = queryString
+          ? Object.fromEntries(new URLSearchParams(queryString))
+          : {};
+
+        script.dataset.query = queryString || "";
         document.body.appendChild(script);
 
-        // Tambahkan <link rel="stylesheet"> baru jika belum ada
+        // Tambahkan stylesheet dari halaman jika belum ada
         doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
           if (!document.querySelector(`link[href="${link.href}"]`)) {
             const newLink = document.createElement("link");
@@ -490,26 +492,28 @@
           }
         });
 
-        // Inisialisasi ulang Bootstrap dan AOS jika ada
+        // Inisialisasi Bootstrap Modal & AOS
         if (typeof initBootstrap5Modals === "function") initBootstrap5Modals();
         if (window.AOS) AOS.init();
       })
       .catch((err) => {
-        contents.innerHTML = `<div class="alert alert-danger mt-3">Error: ${err.message}</div>`;
+        contents.innerHTML = `<div class="alert alert-danger mt-3">Terjadi kesalahan saat memuat halaman: ${err.message}</div>`;
+        console.error("Load content error:", err);
       });
   }
 
   function initBootstrap5Modals() {
-    // Bootstrap 5 Modal Auto Init
     document.querySelectorAll(".modal").forEach((modalEl) => {
       new bootstrap.Modal(modalEl);
     });
   }
 
   function checkHash() {
-    let hash = location.hash.substring(1);
+    let hash = location.hash.substring(1); // buang tanda "#"
     if (!hash) hash = "home.html";
-    loadContent(hash);
+
+    const [page, queryString] = hash.split("?");
+    loadContent(page, queryString);
   }
 
   window.addEventListener("DOMContentLoaded", () => {
@@ -519,13 +523,16 @@
       link.addEventListener("click", (e) => {
         e.preventDefault();
         const page = link.getAttribute("data-content");
-        location.hash = page;
+        location.hash = page; // Contoh: profil_individu.html?nip=123
       });
     });
   });
 
   window.addEventListener("hashchange", checkHash);
 </script>
+
+
+
 </body>
 </html>
 
