@@ -447,85 +447,31 @@
 </html>
 
 <script type="text/javascript">
-  function loadContent(page) {
-    const contents = document.getElementById("contents");
-
-    // Tampilkan spinner
-    contents.innerHTML = `
-    <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
-      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  `;
-
-    // Hapus semua script halaman sebelumnya
-    document
-      .querySelectorAll("script[data-page-script]")
-      .forEach((script) => script.remove());
-
-    fetch("pages/" + page)
-      .then((res) => {
-        if (!res.ok) throw new Error("Gagal memuat halaman.");
-        return res.text();
-      })
-      .then((html) => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-
-        contents.innerHTML = doc.body.innerHTML;
-
-        // Muat ulang JS halaman jika ada file JS sesuai nama halaman
-        const pageName = page.split(".")[0];
-        const script = document.createElement("script");
-        script.src = `pages/${pageName}.js`;
-        script.setAttribute("data-page-script", "true");
-        script.defer = true;
-        document.body.appendChild(script);
-
-        // Tambahkan <link rel="stylesheet"> baru jika belum ada
-        doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
-          if (!document.querySelector(`link[href="${link.href}"]`)) {
-            const newLink = document.createElement("link");
-            newLink.rel = "stylesheet";
-            newLink.href = link.href;
-            document.head.appendChild(newLink);
-          }
-        });
-
-        // Inisialisasi ulang Bootstrap dan AOS jika ada
-        if (typeof initBootstrap5Modals === "function") initBootstrap5Modals();
-        if (window.AOS) AOS.init();
-      })
-      .catch((err) => {
-        contents.innerHTML = `<div class="alert alert-danger mt-3">Error: ${err.message}</div>`;
-      });
-  }
-
-  function initBootstrap5Modals() {
-    // Bootstrap 5 Modal Auto Init
-    document.querySelectorAll(".modal").forEach((modalEl) => {
-      new bootstrap.Modal(modalEl);
-    });
-  }
-
+  // Fungsi ini akan mengambil hash dari URL (misalnya #home.html)
+  // lalu arahkan browser untuk reload ke file di folder pages/
   function checkHash() {
     let hash = location.hash.substring(1);
-    if (!hash) hash = "home.html";
-    loadContent(hash);
+    if (!hash) hash = "home.html"; // default halaman
+    window.location.href = "pages/" + hash; // langsung reload halaman penuh
   }
 
+  // Saat halaman pertama kali dimuat
   window.addEventListener("DOMContentLoaded", () => {
     checkHash();
 
+    // Setiap link dengan atribut data-content akan ubah hash di URL
     document.querySelectorAll("a[data-content]").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
         const page = link.getAttribute("data-content");
-        location.hash = page;
+        location.hash = page; // ubah URL tanpa reload langsung
       });
     });
   });
 
+  // Saat hash di URL berubah (misal dari #home.html ke #about.html)
   window.addEventListener("hashchange", checkHash);
 </script>
+</body>
+</html>
+
