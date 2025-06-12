@@ -1,6 +1,6 @@
 (() => {
   const scriptURL =
-    "https://script.google.com/macros/s/AKfycbz_Zylub5VDIQhncW39y_dNjcCmcTedX70m3WWMFSvau0nx7AS0kFXq-S-ZJ3Mbqwiu/exec";
+    "https://script.google.com/macros/s/AKfycbwT_xNMEzGGFBuo_TAkhcEjt8eAIVm11x-P1g0GpgWT1lroxA8tQJsu8hGuM22pK08wFQ/exec";
 
   let globalData = [];
 
@@ -60,12 +60,20 @@
             renderTable(globalData);
             $("#addForm")[0].reset();
           } else {
-            Swal.fire("Gagal!", res.message || "Gagal menambahkan data.", "error");
+            Swal.fire(
+              "Gagal!",
+              res.message || "Gagal menambahkan data.",
+              "error"
+            );
           }
         })
         .catch((err) => {
           Swal.close();
-          Swal.fire("Error!", "Terjadi kesalahan saat menambahkan data.", "error");
+          Swal.fire(
+            "Error!",
+            "Terjadi kesalahan saat menambahkan data.",
+            "error"
+          );
           console.error(err);
         });
     });
@@ -106,7 +114,11 @@
             globalData[index] = { ...globalData[index], ...updatedData };
             renderTable(globalData);
           } else {
-            Swal.fire("Gagal!", res.message || "Gagal menyimpan data.", "error");
+            Swal.fire(
+              "Gagal!",
+              res.message || "Gagal menyimpan data.",
+              "error"
+            );
           }
         })
         .catch((err) => {
@@ -122,13 +134,14 @@
       $("#karyawanTable").DataTable().destroy();
     }
 
-    const tableBody = data.map((row, index) => {
-      const link = row["link_laporan"];
-      const linkHTML = link
-        ? `<a href="${link}" target="_blank" class="badge bg-primary text-decoration-none"><i class="bi bi-link-45deg"></i> Kunjungi</a>`
-        : `<span class="text-muted">-</span>`;
+    const tableBody = data
+      .map((row, index) => {
+        const link = row["link_laporan"];
+        const linkHTML = link
+          ? `<a href="${link}" target="_blank" class="badge bg-primary text-decoration-none"><i class="bi bi-link-45deg"></i> Kunjungi</a>`
+          : `<span class="text-muted">-</span>`;
 
-      return `
+        return `
         <tr>
           <td>${row["No"] || ""}</td>
           <td>${row["Jenis_laporan"] || ""}</td>
@@ -139,7 +152,8 @@
             <button class="btn btn-sm btn-danger" onclick="deleteData(${index})">Hapus</button>
           </td>
         </tr>`;
-    }).join("");
+      })
+      .join("");
 
     $("#karyawanTable tbody").html(tableBody);
     $("#karyawanTable").DataTable();
@@ -193,7 +207,11 @@
               globalData.splice(index, 1);
               renderTable(globalData);
             } else {
-              Swal.fire("Gagal!", res.message || "Gagal menghapus data.", "error");
+              Swal.fire(
+                "Gagal!",
+                res.message || "Gagal menghapus data.",
+                "error"
+              );
             }
           })
           .catch((err) => {
