@@ -200,7 +200,12 @@
                   <a class="dropdown-item" href="#zona1">Pendaftaran EMR</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="maklumat.html" data-content="maklumat.html">Maklumat Pelayanan</a>
+                  <a
+                    class="dropdown-item"
+                    href="maklumat.html"
+                    data-content="maklumat.html"
+                    >Maklumat Pelayanan</a
+                  >
                 </li>
                 <li>
                   <a class="dropdown-item" href="#zona1">Standart Pelayanan</a>
@@ -322,14 +327,22 @@
               </ul>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="#program-prioritas"
-                >Program Prioritas Nasional</a
-              >
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="prioritas_nasional"
+                role="button"
+                data-bs-toggle="dropdown"
+                >Program Prioritas Nasional <i class="bi bi-caret-down-fill"></i
+              ></a>
+              <ul class="dropdown-menu" aria-labelledby="prioritas_nasional">
+                <li><a class="dropdown-item" href="#laporan">ILP CKG</a></li>
+
+                <!-- <li><a class="dropdown-item" href="#pkp">PKP</a></li> -->
+              </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#ilp-ckg">ILP CKG</a>
-            </li>
+
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -393,14 +406,15 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-content="jurnal.html">Jurnal</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
     <div class="container mb-2" id="contents"></div>
-    <footer
-      class="bg-light text-dark text-center shadow p-3 mt-5  shadow"
-    >
+    <footer class="bg-light text-dark text-center shadow p-3 mt-5 shadow">
       <small>&copy; 2025 Puskesmas Trenggalek. All rights reserved.</small>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
