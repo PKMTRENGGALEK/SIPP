@@ -1,9 +1,9 @@
 (() => {
-  const scriptURL = "https://script.google.com/macros/s/AKfycbzv7hK23jFpuh6swh5aYWekPytcIqK_VmjFYHNS5Kyvuz6RAHeRTZepwTMeYg4FKJ0j/exec";
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbzv7hK23jFpuh6swh5aYWekPytcIqK_VmjFYHNS5Kyvuz6RAHeRTZepwTMeYg4FKJ0j/exec";
   let globalData = [];
 
-  // Langsung jalan (tanpa DOMContentLoaded)
-  showLoading();
+  showLoading(); // Tampilkan baris loading
 
   fetch(scriptURL)
     .then((res) => res.json())
@@ -15,6 +15,7 @@
     .catch((err) => {
       console.error("Gagal mengambil data:", err);
       showErrorToast("Gagal mengambil data.");
+      showLoading(false); // tampilkan pesan gagal jika mau
     });
 
   document.getElementById("pinForm").addEventListener("submit", function (e) {
@@ -38,24 +39,28 @@
     const table = $("#datatable-individu");
     if ($.fn.DataTable.isDataTable(table)) table.DataTable().destroy();
 
-    const rows = data.map((row) => {
-      return `<tr>
+    const rows = data
+      .map((row) => {
+        return `<tr>
         <td>${row.NAMA || ""}</td>
         <td>${row.NIP || ""}</td>
         <td>${row.JABATAN || ""}</td>
         <td class="text-center">
-          <button class="btn btn-sm btn-warning shadow" onclick="showPinModal('${row.NIP}')">
+          <button class="btn btn-sm btn-warning shadow" onclick="showPinModal('${
+            row.NIP
+          }')">
             <i class="bi bi-person"></i> View Profile
           </button>
         </td>
       </tr>`;
-    }).join("");
+      })
+      .join("");
 
     document.querySelector("#datatable-individu tbody").innerHTML = rows;
     table.DataTable({ order: [[0, "asc"]] });
   }
 
-  window.showPinModal = function(nip) {
+  window.showPinModal = function (nip) {
     document.getElementById("selectedNIP").value = nip;
     document.getElementById("pinInput").value = "";
     const modal = new bootstrap.Modal(document.getElementById("pinModal"));
@@ -79,7 +84,15 @@
   }
 
   function showLoading() {
-    document.querySelector("#datatable-individu tbody").innerHTML =
-      `<tr><td colspan="4" class="text-center">Memuat data...</td></tr>`;
+    const tbody = document.querySelector("#datatable-individu tbody");
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" class="text-center">
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <div class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></div>
+            <span>Memuat data...</span>
+          </div>
+        </td>
+      </tr>`;
   }
 })();
