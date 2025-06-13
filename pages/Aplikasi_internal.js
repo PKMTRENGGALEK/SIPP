@@ -229,12 +229,17 @@
       toast.show();
     }
   }
-
   // Loading
   function showLoading() {
-    $("#karyawanTable tbody").html(
-      `<tr><td colspan="5" class="text-center">Memuat data...</td></tr>`
-    );
+    const colCount = $("#karyawanTable thead th").length;
+    $("#karyawanTable tbody").html(`
+      <tr>
+        <td colspan="${colCount}" class="text-center">
+          <div class="spinner-border spinner-border-sm text-primary me-1" role="status"></div>
+          Memuat data...
+        </td>
+      </tr>
+    `);
   }
 
   function hideLoading() {
