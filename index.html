@@ -336,7 +336,6 @@
                 >Program Prioritas Nasional <i class="bi bi-caret-down-fill"></i
               ></a>
               <ul class="dropdown-menu" aria-labelledby="prioritas_nasional">
-                
                 <li class="dropdown-submenu">
                   <a class="dropdown-item dropdown-toggle" href="#">ILP CKG</a>
                   <ul class="dropdown-menu">
@@ -349,16 +348,10 @@
                       >
                     </li>
                     <li>
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        target="_blank"
-                        >ILP</a
-                      >
+                      <a class="dropdown-item" href="#" target="_blank">ILP</a>
                     </li>
                   </ul>
                 </li>
-                
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -431,8 +424,10 @@
         </div>
       </div>
     </nav>
- <div class="container mb-2" id="contents"></div>
-    <footer class="bg-light text-dark text-center shadow p-3 mt-5 shadow">
+    <div class="container mb-2" id="contents"></div>
+    <footer
+      class="bg-light text-dark text-center shadow p-3 mt-5 shadow fixed-bottom mt-2"
+    >
       <small>&copy; 2025 Puskesmas Trenggalek. All rights reserved.</small>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -443,96 +438,94 @@
         AOS.init();
       });
     </script>
- 
 
-<script>
-  function loadContent(page, queryString = "") {
-    const contents = document.getElementById("contents");
+    <script>
+      function loadContent(page, queryString = "") {
+        const contents = document.getElementById("contents");
 
-    // Kosongkan konten (tanpa spinner)
-    contents.innerHTML = "";
+        // Kosongkan konten (tanpa spinner)
+        contents.innerHTML = "";
 
-    // Hapus semua script halaman sebelumnya
-    document.querySelectorAll("script[data-page-script]").forEach((script) => script.remove());
+        // Hapus semua script halaman sebelumnya
+        document
+          .querySelectorAll("script[data-page-script]")
+          .forEach((script) => script.remove());
 
-    fetch("pages/" + page)
-      .then((res) => {
-        if (!res.ok) throw new Error("Gagal memuat halaman.");
-        return res.text();
-      })
-      .then((html) => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
+        fetch("pages/" + page)
+          .then((res) => {
+            if (!res.ok) throw new Error("Gagal memuat halaman.");
+            return res.text();
+          })
+          .then((html) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
 
-        // Masukkan HTML ke kontainer
-        contents.innerHTML = doc.body.innerHTML;
+            // Masukkan HTML ke kontainer
+            contents.innerHTML = doc.body.innerHTML;
 
-        // Load JS jika ada
-        const pageName = page.split(".")[0];
-        const script = document.createElement("script");
-        script.src = `pages/${pageName}.js`;
-        script.setAttribute("data-page-script", "true");
-        script.defer = true;
+            // Load JS jika ada
+            const pageName = page.split(".")[0];
+            const script = document.createElement("script");
+            script.src = `pages/${pageName}.js`;
+            script.setAttribute("data-page-script", "true");
+            script.defer = true;
 
-        // Simpan query string agar bisa diakses dari halaman
-        window.pageQuery = queryString
-          ? Object.fromEntries(new URLSearchParams(queryString))
-          : {};
+            // Simpan query string agar bisa diakses dari halaman
+            window.pageQuery = queryString
+              ? Object.fromEntries(new URLSearchParams(queryString))
+              : {};
 
-        script.dataset.query = queryString || "";
-        document.body.appendChild(script);
+            script.dataset.query = queryString || "";
+            document.body.appendChild(script);
 
-        // Tambahkan stylesheet dari halaman jika belum ada
-        doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
-          if (!document.querySelector(`link[href="${link.href}"]`)) {
-            const newLink = document.createElement("link");
-            newLink.rel = "stylesheet";
-            newLink.href = link.href;
-            document.head.appendChild(newLink);
-          }
+            // Tambahkan stylesheet dari halaman jika belum ada
+            doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
+              if (!document.querySelector(`link[href="${link.href}"]`)) {
+                const newLink = document.createElement("link");
+                newLink.rel = "stylesheet";
+                newLink.href = link.href;
+                document.head.appendChild(newLink);
+              }
+            });
+
+            // Inisialisasi Bootstrap Modal & AOS
+            if (typeof initBootstrap5Modals === "function")
+              initBootstrap5Modals();
+            if (window.AOS) AOS.init();
+          })
+          .catch((err) => {
+            contents.innerHTML = `<div class="alert alert-danger mt-3">Terjadi kesalahan saat memuat halaman: ${err.message}</div>`;
+            console.error("Load content error:", err);
+          });
+      }
+
+      function initBootstrap5Modals() {
+        document.querySelectorAll(".modal").forEach((modalEl) => {
+          new bootstrap.Modal(modalEl);
         });
+      }
 
-        // Inisialisasi Bootstrap Modal & AOS
-        if (typeof initBootstrap5Modals === "function") initBootstrap5Modals();
-        if (window.AOS) AOS.init();
-      })
-      .catch((err) => {
-        contents.innerHTML = `<div class="alert alert-danger mt-3">Terjadi kesalahan saat memuat halaman: ${err.message}</div>`;
-        console.error("Load content error:", err);
+      function checkHash() {
+        let hash = location.hash.substring(1); // buang tanda "#"
+        if (!hash) hash = "home.html";
+
+        const [page, queryString] = hash.split("?");
+        loadContent(page, queryString);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        checkHash();
+
+        document.querySelectorAll("a[data-content]").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const page = link.getAttribute("data-content");
+            location.hash = page; // Contoh: profil_individu.html?nip=123
+          });
+        });
       });
-  }
 
-  function initBootstrap5Modals() {
-    document.querySelectorAll(".modal").forEach((modalEl) => {
-      new bootstrap.Modal(modalEl);
-    });
-  }
-
-  function checkHash() {
-    let hash = location.hash.substring(1); // buang tanda "#"
-    if (!hash) hash = "home.html";
-
-    const [page, queryString] = hash.split("?");
-    loadContent(page, queryString);
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    checkHash();
-
-    document.querySelectorAll("a[data-content]").forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const page = link.getAttribute("data-content");
-        location.hash = page; // Contoh: profil_individu.html?nip=123
-      });
-    });
-  });
-
-  window.addEventListener("hashchange", checkHash);
-</script>
-
-
-
-</body>
+      window.addEventListener("hashchange", checkHash);
+    </script>
+  </body>
 </html>
-
