@@ -4,6 +4,33 @@
 
   let globalData = [];
 
+  // ✅ Fungsi show/hide loading
+  function showLoading() {
+    $("#karyawanTable tbody").html(`
+      <tr>
+        <td colspan="5" class="text-center text-muted">
+          <div class="d-flex align-items-center justify-content-center gap-2">
+            <div class="spinner-border text-primary spinner-border-sm" role="status" aria-hidden="true"></div>
+            <span>Memuat data...</span>
+          </div>
+        </td>
+      </tr>
+    `);
+  }
+
+  function hideLoading() {
+    // Tidak perlu melakukan apa-apa karena renderTable akan mengisi ulang tbody
+  }
+
+  function showSuccessToast(msg) {
+    $("#toastBody").text(msg);
+    const toastEl = document.getElementById("successToast");
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    }
+  }
+
   $(document).ready(function () {
     showLoading();
 
@@ -12,12 +39,13 @@
       .then((data) => {
         globalData = data;
         renderTable(globalData);
-        hideLoading();
         showSuccessToast("Data berhasil dimuat.");
       })
       .catch((err) => {
         console.error("Gagal mengambil data:", err);
-        hideLoading();
+        $("#karyawanTable tbody").html(
+          `<tr><td colspan="5" class="text-center text-danger">Gagal memuat data.</td></tr>`
+        );
       });
 
     // Submit form tambah
@@ -27,9 +55,9 @@
       const newData = {
         action: "add",
         Nama_laporan: $("#addNama").val().trim(),
-        Jenis_laporan: $("#addUsername").val().trim(),
-        No: $("#addNIP").val().trim(),
-        link_laporan: $("#addJabatan").val().trim(),
+        Jenis_laporan: $("#addJenis").val().trim(),
+        No: $("#addNo").val().trim(),
+        link_laporan: $("#addLink").val().trim(),
       };
 
       if (!newData.Nama_laporan || !newData.Jenis_laporan || !newData.No) {
@@ -45,14 +73,15 @@
       });
 
       const formData = new FormData();
-      for (const key in newData) {
-        formData.append(key, newData[key]);
-      }
+      Object.keys(newData).forEach((key) => formData.append(key, newData[key]));
+
+      showLoading();
 
       fetch(scriptURL, { method: "POST", body: formData })
         .then((res) => res.json())
         .then((res) => {
           Swal.close();
+          hideLoading();
           if (res.success) {
             showSuccessToast("Data berhasil ditambahkan.");
             $("#addModal").modal("hide");
@@ -69,6 +98,7 @@
         })
         .catch((err) => {
           Swal.close();
+          hideLoading();
           Swal.fire(
             "Error!",
             "Terjadi kesalahan saat menambahkan data.",
@@ -87,9 +117,9 @@
         action: "edit",
         index: index,
         Nama_laporan: $("#editNama").val().trim(),
-        Jenis_laporan: $("#editUsername").val().trim(),
-        No: $("#editNIP").val().trim(),
-        link_laporan: $("#editJabatan").val().trim(),
+        Jenis_laporan: $("#editJenis").val().trim(),
+        No: $("#editNo").val().trim(),
+        link_laporan: $("#editLink").val().trim(),
       };
 
       Swal.fire({
@@ -100,14 +130,17 @@
       });
 
       const formData = new FormData();
-      for (const key in updatedData) {
-        formData.append(key, updatedData[key]);
-      }
+      Object.keys(updatedData).forEach((key) =>
+        formData.append(key, updatedData[key])
+      );
+
+      showLoading();
 
       fetch(scriptURL, { method: "POST", body: formData })
         .then((res) => res.json())
         .then((res) => {
           Swal.close();
+          hideLoading();
           if (res.success) {
             showSuccessToast("Data berhasil diperbarui.");
             $("#editModal").modal("hide");
@@ -123,6 +156,7 @@
         })
         .catch((err) => {
           Swal.close();
+          hideLoading();
           Swal.fire("Error!", "Terjadi kesalahan saat menyimpan.", "error");
           console.error(err);
         });
@@ -148,8 +182,8 @@
           <td>${row["Nama_laporan"] || ""}</td>
           <td>${linkHTML}</td>
           <td>
-            <button class="btn btn-sm btn-warning" onclick="editData(${index})">Edit</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteData(${index})">Hapus</button>
+            <button class="btn btn-sm btn-warning shadow" onclick="editData(${index})">Edit</button>
+            <button class="btn btn-sm btn-danger shadow" onclick="deleteData(${index})">Hapus</button>
           </td>
         </tr>`;
       })
@@ -159,18 +193,16 @@
     $("#karyawanTable").DataTable();
   }
 
-  // Fungsi edit
   window.editData = function (index) {
     const row = globalData[index];
     $("#editIndex").val(index);
     $("#editNama").val(row["Nama_laporan"]);
-    $("#editUsername").val(row["Jenis_laporan"]);
-    $("#editNIP").val(row["No"]);
-    $("#editJabatan").val(row["link_laporan"]);
+    $("#editJenis").val(row["Jenis_laporan"]);
+    $("#editNo").val(row["No"]);
+    $("#editLink").val(row["link_laporan"]);
     $("#editModal").modal("show");
   };
 
-  // Fungsi hapus
   window.deleteData = function (index) {
     const row = globalData[index];
 
@@ -195,6 +227,8 @@
         formData.append("action", "delete");
         formData.append("index", index);
 
+        showLoading();
+
         fetch(scriptURL, {
           method: "POST",
           body: formData,
@@ -202,6 +236,7 @@
           .then((res) => res.json())
           .then((res) => {
             Swal.close();
+            hideLoading();
             if (res.success) {
               Swal.fire("Terhapus!", "Data berhasil dihapus.", "success");
               globalData.splice(index, 1);
@@ -216,31 +251,11 @@
           })
           .catch((err) => {
             Swal.close();
+            hideLoading();
             Swal.fire("Error!", "Gagal menghapus data.", "error");
             console.error(err);
           });
       }
     });
   };
-
-  // Toast sukses
-  function showSuccessToast(msg) {
-    $("#toastBody").text(msg);
-    const toastEl = document.getElementById("successToast");
-    if (toastEl) {
-      const toast = new bootstrap.Toast(toastEl);
-      toast.show();
-    }
-  }
-
-  // Loading
-  function showLoading() {
-    $("#karyawanTable tbody").html(
-      `<tr><td colspan="5" class="text-center">Memuat data...</td></tr>`
-    );
-  }
-
-  function hideLoading() {
-    // Tidak perlu isi, karena renderTable akan overwrite.
-  }
 })();
