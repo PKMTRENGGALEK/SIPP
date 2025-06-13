@@ -16,7 +16,18 @@
     });
   });
 
+  function showLoading() {
+    const colCount = $("#pedomanTable thead th").length;
+    const tds = Array(colCount).fill("<td></td>");
+    tds[0] = `<td class="text-center" colspan="${colCount}">
+                <div class="spinner-border spinner-border-sm text-primary me-1" role="status"></div>
+                Memuat data mohon tunggu......
+              </td>`;
+    $("#pedomanTable tbody").html(`<tr>${tds.join("")}</tr>`);
+  }
+
   function loadPedoman() {
+    showLoading();
     fetch(scriptURL)
       .then((res) => res.json())
       .then((data) => {
@@ -99,6 +110,7 @@
     const toast = new bootstrap.Toast(document.getElementById("successToast"));
     toast.show();
   }
+
   $("#addForm").submit(function (e) {
     e.preventDefault();
     const fileInput = document.getElementById("addFile");
