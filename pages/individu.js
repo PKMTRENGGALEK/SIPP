@@ -1,6 +1,6 @@
 (() => {
   const scriptURL =
-    "https://script.google.com/macros/s/AKfycbzv7hK23jFpuh6swh5aYWekPytcIqK_VmjFYHNS5Kyvuz6RAHeRTZepwTMeYg4FKJ0j/exec";
+    "https://script.google.com/macros/s/AKfycbwoeeV-PJaEL_GB1s39IrA9yGSfiYBF99n69DzLIrcq_QKOykEWwA58DIW7RSPBkwOzBw/exec";
   let globalData = [];
 
   showLoading(); // Tampilkan baris loading
@@ -23,42 +23,47 @@
     const pin = document.getElementById("pinInput").value;
     const nip = document.getElementById("selectedNIP").value;
 
-    const correctPIN = "1234";
+    const karyawan = globalData.find((item) => item.NIP === nip);
 
-    if (pin === correctPIN) {
+    if (karyawan && karyawan.PIN === pin) {
       location.hash = `profile_individu.html?nip=${encodeURIComponent(nip)}`;
       bootstrap.Modal.getInstance(document.getElementById("pinModal")).hide();
     } else {
       Swal.fire("PIN Salah", "Silakan coba lagi.", "error");
     }
+
   });
 
   function renderTable(data) {
-    data.sort((a, b) => (a.NAMA || "").localeCompare(b.NAMA || ""));
+  const table = $("#datatable-individu");
 
-    const table = $("#datatable-individu");
-    if ($.fn.DataTable.isDataTable(table)) table.DataTable().destroy();
+  if ($.fn.DataTable.isDataTable(table)) {
+    table.DataTable().destroy();
+  }
 
-    const rows = data
-      .map((row) => {
-        return `<tr>
-        <td>${row.NAMA || ""}</td>
-        <td>${row.NIP || ""}</td>
-        <td>${row.JABATAN || ""}</td>
-        <td class="text-center">
-          <button class="btn btn-sm btn-warning shadow" onclick="showPinModal('${
-            row.NIP
-          }')">
+  const rows = data
+    .map((row, index) => {
+      return `<tr>
+        <td class="text-center" style="font-size:12px">${index + 1}</td> <!-- Nomor Urut -->
+        <td style="font-size:12px">${row.NAMA || ""}</td>
+        <td style="font-size:12px">${row.NIP || ""}</td>
+        <td style="font-size:12px">${row.JABATAN || ""}</td>
+        <td class="text-center" style="font-size:12px">
+          <button class="btn btn-sm btn-warning shadow" onclick="showPinModal('${row.NIP}')" style="font-size:12px">
             <i class="bi bi-person"></i> View Profile
           </button>
         </td>
       </tr>`;
-      })
-      .join("");
+    })
+    .join("");
 
-    document.querySelector("#datatable-individu tbody").innerHTML = rows;
-    table.DataTable({ order: [[0, "asc"]] });
-  }
+  document.querySelector("#datatable-individu tbody").innerHTML = rows;
+
+  table.DataTable({
+    ordering: false
+  });
+}
+
 
   window.showPinModal = function (nip) {
     document.getElementById("selectedNIP").value = nip;
@@ -87,7 +92,7 @@
     const tbody = document.querySelector("#datatable-individu tbody");
     tbody.innerHTML = `
       <tr>
-        <td colspan="4" class="text-center">
+        <td colspan="5" class="text-center">
           <div class="d-flex justify-content-center align-items-center gap-2">
             <div class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></div>
             <span>Memuat data...</span>
