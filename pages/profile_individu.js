@@ -66,7 +66,7 @@
           <tr><td>8. Jabatan Sekarang / Eselon</td><td>: ${pegawai.JABATAN} / ${pegawai.ESELON || "-"}</td></tr>
           <tr><td>9. Pendidikan Terakhir / Tahun</td><td>: ${pegawai.IJAZAH || "-"} / ${pegawai.LULUS_TAHUN || "-"}</td></tr>
           <tr><td>10. Diklat Penjenjangan</td><td>: ${pegawai.DIKLAT_PENJENJANGAN || "-"}</td></tr>
-          <tr><td>11. Alamat Rumah / No. Telepon</td><td>: ${pegawai.ALAMAT || "-"}</td></tr>
+          <tr><td>11. Alamat Rumah / No. Telepon</td><td>: ${pegawai.ALAMAT || "-"} / / ${pegawai.NO_TELP || "-"}</td></tr>
         </table>
 
         <h6 class="section-title fw-bold">II. RIWAYAT JABATAN</h6>
