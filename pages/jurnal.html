@@ -1,0 +1,110 @@
+<style>
+  .object-fit-cover {
+    object-fit: cover;
+  }
+</style>
+
+<div class="card mt-2">
+  <div class="card-body shadow">
+    <div class="container py-4">
+      <h2 class="mb-4 d-flex justify-content-between align-items-center">
+        Jurnal Puskesmas
+        <button
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#jurnalModal"
+        >
+          <i class="bi bi-plus-circle"></i> Tambah Jurnal
+        </button>
+      </h2>
+
+      <!-- Modal Tambah Jurnal -->
+      <div
+        class="modal fade"
+        id="jurnalModal"
+        tabindex="-1"
+        aria-labelledby="jurnalModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="jurnalForm">
+              <div class="modal-header">
+                <h5 class="modal-title" id="jurnalModalLabel">Tambah Jurnal</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Tutup"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="judul" class="form-label">Judul</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="judul"
+                    name="judul"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="isi" class="form-label">Isi Jurnal</label>
+                  <textarea
+                    class="form-control"
+                    id="isi"
+                    name="isi"
+                    rows="4"
+                    required
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="author" class="form-label">Author</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="author"
+                    name="author"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="fileInput" class="form-label"
+                    >Upload Gambar</label
+                  >
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="fileInput"
+                    name="file"
+                    accept="image/*"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Batal
+                </button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="loading" class="text-center my-4" style="display: none">
+        <div class="spinner-border text-danger" role="status"></div>
+      </div>
+
+      <!-- Daftar Jurnal -->
+      <div id="jurnal-list" class="row mt-4">
+        <!-- Kartu jurnal akan dimuat di sini -->
+      </div>
+    </div>
+  </div>
+</div>

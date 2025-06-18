@@ -1,0 +1,54 @@
+<div class="container py-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white fw-bold">
+      Tambah Riwayat Kepangkatan
+    </div>
+    <div class="card-body">
+      <form id="formPangkat" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="add" />
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="nip" class="form-label">NIP</label>
+            <input type="text" id="nip" name="NIP" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label for="pangkat" class="form-label">Pangkat</label>
+            <input type="text" id="pangkat" name="PANGKAT" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label for="gol" class="form-label">Golongan</label>
+            <input type="text" id="gol" name="GOL" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label for="tmt" class="form-label">TMT</label>
+            <input type="date" id="tmt" name="TMT" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label for="pejabat" class="form-label">Pejabat</label>
+            <input type="text" id="pejabat" name="PEJABAT" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label for="tanggal" class="form-label">Tanggal SK</label>
+            <input type="date" id="tanggal" name="TANGGAL" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label for="nomor" class="form-label">Nomor SK</label>
+            <input type="text" id="nomor" name="NOMOR" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label for="file" class="form-label">Upload File SK <span class="text-danger">*</span></label>
+            <input type="file" id="file" name="FILE" class="form-control" required />
+          </div>
+        </div>
+
+        <div class="mt-4 text-end">
+          <button type="submit" class="btn btn-success shadow">
+            <i class="bi bi-save me-1"></i> Simpan Data
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  

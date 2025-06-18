@@ -1,0 +1,117 @@
+<div class="container py-4">
+  <h2 class="mb-4">Daftar Aplikasi Internal</h2>
+  <hr />
+  <!-- <button
+    class="btn btn-warning mb-3 text-white shadow"
+    data-bs-toggle="modal"
+    data-bs-target="#addModal"
+    style="font-size: 13px"
+  >
+    ➕ Tambah Aplikasi
+  </button> -->
+  <div class="table-responsive">
+    <table id="karyawanTable" class="table table-bordered">
+      <thead>
+        <tr>
+          <th
+            class="bg-success bg-gradient text-center text-white"
+            style="font-size: 13px"
+            width="40px"
+          >
+            No
+          </th>
+          <th
+            class="bg-success bg-gradient text-center text-white"
+            style="font-size: 13px"
+          >
+            Nama
+          </th>
+          <th
+            class="bg-success bg-gradient text-center text-white"
+            style="font-size: 13px"
+            width="100px"
+          >
+            Link Aplikasi
+          </th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Tambah -->
+<div class="modal fade" id="addModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="addForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tambah Aplikasi</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="addNama"
+          placeholder="Nama Aplikasi"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="url"
+          placeholder="Link"
+          required
+        />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal Edit -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="editForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Laporan</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editIndex" />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="editNama"
+          placeholder="Nama Laporan"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="editURL"
+          placeholder="Url Link"
+          required
+        />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>

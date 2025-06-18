@@ -1,0 +1,72 @@
+<div class="container py-4">
+  <h4 class="mb-3">Daftar Individu</h4>
+
+<div class="table-responsive">
+    <table id="datatable-individu" class="table table-striped table-hover table-bordered">
+      <thead class="table-primary bg-gradient">
+        <tr>
+          <th class="text-center">No</th>
+          <th class="text-center">Nama</th>
+          <th class="text-center">NIP</th>
+          <th class="text-center">Jabatan</th>
+          <th class="text-center">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>
+
+<!-- Modal PIN -->
+<div
+  class="modal fade"
+  id="pinModal"
+  tabindex="-1"
+  aria-labelledby="pinModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="pinForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pinModalLabel">Verifikasi PIN</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Tutup"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="selectedNIP" />
+        <div class="mb-3">
+          <label for="pinInput" class="form-label">Masukkan PIN:</label>
+          <input type="password" class="form-control" id="pinInput" required />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Lihat Profil</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+  <div
+    id="successToast"
+    class="toast align-items-center text-white bg-success"
+    role="alert"
+  >
+    <div class="d-flex">
+      <div class="toast-body" id="toastBody">Berhasil</div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+      ></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<div class="container py-4">
+  <h2 class="mb-4">Daftar Pedoman</h2>
+  <hr />
+  <!-- <button
+    class="btn btn-primary mb-3"
+    data-bs-toggle="modal"
+    data-bs-target="#addModal"
+  >
+    Tambah Pedoman
+  </button> -->
+  <table id="pedomanTable" class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nama File</th>
+        <th>Keterangan</th>
+        <th>Ukuran</th>
+        <th>Dibuat</th>
+        <th width="100px">Aksi</th>
+      </tr>
+    </thead>
+    <tbody style="font-size: 12px"></tbody>
+  </table>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+  <div
+    id="successToast"
+    class="toast align-items-center text-bg-success border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body" id="toastBody"></div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Konfirmasi Hapus</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Yakin ingin menghapus pedoman ini?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="button" class="btn btn-danger" id="btnDeleteConfirm">
+          Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="addModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="addForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tambah Pedoman</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="addKeterangan" class="form-label">Keterangan</label>
+          <textarea class="form-control" id="addKeterangan" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="addFile" class="form-label">Upload File (PDF)</label>
+          <input
+            type="file"
+            class="form-control"
+            id="addFile"
+            accept="application/pdf"
+            required
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Script dependen -->
+
+<script src="pages/pedoman.js"></script>

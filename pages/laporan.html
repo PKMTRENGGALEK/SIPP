@@ -1,0 +1,161 @@
+<div class="container py-4">
+  <h2 class="mb-4">Daftar Laporan</h2>
+  <hr />
+  <!-- <button
+    class="btn btn-primary mb-3"
+    data-bs-toggle="modal"
+    data-bs-target="#addModal"
+  >
+    Tambah Laporan
+  </button> -->
+  <table id="karyawanTable" class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center bg-primary bg-gradient text-white">No</th>
+        <th class="text-center bg-primary bg-gradient text-white">
+          Jenis Laporan
+        </th>
+        <th class="text-center bg-primary bg-gradient text-white">
+          Nama Laporan
+        </th>
+        <th class="text-center bg-primary bg-gradient text-white">Link</th>
+        <!-- <th width="90px" class="text-center bg-primary bg-gradient text-white">
+          Aksi
+        </th> -->
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- Modal Tambah -->
+<div class="modal fade" id="addModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="addForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tambah Laporan</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="addNama"
+          placeholder="Nama Laporan"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="addUsername"
+          placeholder="Jenis Laporan"
+          required
+        />
+        <input
+          type="number"
+          class="form-control mb-2"
+          id="addNIP"
+          placeholder="No"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="addJabatan"
+          placeholder="Link"
+          required
+        />
+        <input type="hidden" id="addGol" value="" />
+        <input type="hidden" id="addJabatanTingkat" value="" />
+        <input type="hidden" id="addJenjang" value="" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="editForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Laporan</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editIndex" />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="editNama"
+          placeholder="Nama Laporan"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="editUsername"
+          placeholder="Jenis Laporan"
+          required
+        />
+        <input
+          type="number"
+          class="form-control mb-2"
+          id="editNIP"
+          placeholder="No"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="editJabatan"
+          placeholder="Link"
+          required
+        />
+        <input type="hidden" id="editGol" value="" />
+        <input type="hidden" id="editJabatanTingkat" value="" />
+        <input type="hidden" id="editJenjang" value="" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+  <div
+    id="successToast"
+    class="toast align-items-center text-bg-success border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body" id="toastBody"></div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>
