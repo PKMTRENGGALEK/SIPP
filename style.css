@@ -1,0 +1,361 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  font-family: sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main#content {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+  background-color: #ffffff; /* Putih solid */
+}
+
+/* Scroll to Top Button */
+.scroll-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-top:hover {
+  background-color: #0056b3;
+}
+
+/* Hero Section */
+.hero {
+  background: url("https://images.unsplash.com/photo-1588776814546-ec7c3a84875a?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+    center center/cover no-repeat;
+  color: white;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Section Padding */
+.section-padding {
+  padding: 60px 0;
+}
+
+/* Navbar Glass Effect */
+
+.navbar-glass {
+  background-color: #ffffff; /* Putih solid */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+/* Navbar Links with Hover and Active Underline */
+.navbar-light .navbar-nav .nav-link {
+  position: relative;
+  color: black;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.navbar-light .navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-light .navbar-nav .nav-link:hover::after,
+.navbar-light .navbar-nav .nav-link:focus::after,
+.navbar-light .navbar-nav .nav-link.active::after {
+  transform: scaleX(1);
+}
+/* Dropdown Menu */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  font-weight: 500;
+  color: #333;
+  padding: 0.5rem 1.2rem;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #f0f8ff;
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+/* Dropdown dalam Dropdown */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  display: none;
+  position: absolute;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whatsapp-float svg {
+  width: 30px;
+  height: 30px;
+}
+
+/* Highlight */
+mark {
+  background-color: #ffe066;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* Modal Glass Effect */
+.modal-content {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Carousel Transition */
+.carousel-item {
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+/* Custom CSS untuk dropdown bertingkat */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+.artikel-container {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.artikel-container h1 {
+  color: #026467;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.artikel-container p {
+  text-align: justify;
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.pdf-section {
+  margin-top: 40px;
+}
+
+.pdf-section h2 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.pdf-section iframe {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+@media (max-width: 576px) {
+  .artikel-container {
+    padding: 20px;
+  }
+
+  .pdf-section iframe {
+    height: 400px;
+  }
+}
+.box {
+  border: 2px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 10px auto;
+}
+.title {
+  font-weight: bold;
+}
+.bg-green {
+  background-color: #588157;
+  color: white;
+}
+.bg-red {
+  background-color: #d9534f;
+  color: white;
+}
+.bg-yellow {
+  background-color: #f0ad4e;
+  color: white;
+}
+.bg-orange {
+  background-color: #f36f45;
+  color: white;
+}
+
+.connector {
+  width: 2px;
+  height: 20px;
+  background-color: black;
+  margin: 0 auto;
+}
+.horizontal-line {
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  margin: 0 auto;
+  position: relative;
+  top: 0;
+}
+.horizontal-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.column-box {
+  flex: 1;
+}
+.doctor-image {
+        position: absolute;
+        top: -60px; /* kepala keluar ke atas sekitar 60px */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        max-width: none;
+        height: auto;
+      }
+      .circle-wrapper {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        border: 4px solid #499be7;
+        border-radius: 50%;
+        overflow: visible; /* ubah dari hidden jadi visible */
+        margin: auto;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        background: white; /* opsional biar putih di dalam lingkaran */
+      }
+.vertical-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    background-color: #00bcd4;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28%;
+    text-align: center;
+  }
+  .custom-card {
+    border-left: 4px solid #00bcd4;
+    height: 100%;
+  }
+  .progress-bar-blue {
+    background-color: #00bcd4;
+  }
+  .progress-bar-red {
+    background-color: #e91e63;
+  }
+
+   .header {
+      background: linear-gradient(135deg, #00bcd4, #009688);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .header h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .header p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .header small {
+      display: block;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #e0f7fa;
+    }

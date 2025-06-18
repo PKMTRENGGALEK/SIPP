@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profil Puskesmas Trenggalek</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- Tambahkan link Font Awesome di <head> jika belum ada -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light sticky-top bg-white shadow"
+    >
+      <div class="container-fluid px-4">
+        <!-- Logo kiri -->
+        <a class="navbar-brand d-flex align-items-center text-dark" href="#">
+          <img
+            src="https://ugc.production.linktr.ee/7CWKLr3lS5yjL2KcuaN1_v5FPZ0zyDtb3QaXL?io=true&size=avatar-v3_0"
+            alt="Logo"
+            style="
+              width: 60px;
+              height: 60px;
+              border-radius: 50%;
+              object-fit: cover;
+            "
+          />
+          <span class="ms-2 fw-bold d-block">
+            Puskesmas Trenggalek
+            <span class="fw-bold d-block text-success">Kab.Trenggalek</span>
+          </span>
+        </a>
+
+        <!-- Toggle button untuk mode mobile -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu tengah & pencarian kanan -->
+        <div
+          class="collapse navbar-collapse justify-content-between mt-2 mt-lg-0"
+          id="navbarNav"
+        >
+          <!-- Menu navbar -->
+          <ul class="navbar-nav flex-wrap align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="home.html" data-content="home.html"
+                >Beranda</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#profil"
+                id="profiles"
+                role="button"
+                data-bs-toggle="dropdown"
+                >Profil <i class="bi bi-caret-down-fill"></i
+              ></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="profile.html"
+                    data-content="profile.html"
+                    >Profil</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Tujuan dan Sarana</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona2">Tugas Pokok Fungsi</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="so.html" data-content="so.html"
+                    >Struktur Organisasi</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="penghargaan.html"
+                    data-content="penghargaan.html"
+                    >Penghargaan</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="tatausaha"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Tata Usaha <i class="bi bi-caret-down-fill"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <p class="dropdown-item fw-bold" href="#">
+                    <u>KEPEGAWAIAN</u>
+                  </p>
+                </li>
+                <li><a class="dropdown-item" href="#zona1">SDM</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="ekin.html"
+                    data-content="ekin.html"
+                    >EKIN</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="individu.html"
+                    data-content="individu.html"
+                    >Data Individu Karyawan</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="#zona1">Cuti</a></li>
+                <li><a class="dropdown-item" href="#zona1">SDMK</a></li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Aset Inventaris</a>
+                </li>
+                <li><a class="dropdown-item" href="#zona1">E-Planning</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="pedoman.html"
+                    data-content="pedoman.html"
+                    >Pedoman</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="informasi"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Informasi Umum <i class="bi bi-caret-down-fill"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#zona1">Data Umum</a></li>
+                <li><a class="dropdown-item" href="#zona1">Peta Wilayah</a></li>
+                <li><a class="dropdown-item" href="#zona1">Daftar SK</a></li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">E-SKM</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="layanan"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Layanan Publik <i class="bi bi-caret-down-fill"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#zona1">Pendaftaran EMR</a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="maklumat.html"
+                    data-content="maklumat.html"
+                    >Maklumat Pelayanan</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Standart Pelayanan</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Alur Pelayanan</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Sarpras Pelayanan</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Informasi Pelayanan</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Sistem Informasi</a>
+                </li>
+                <li><a class="dropdown-item" href="#zona1">Pengumuman</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="pengaduan"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Pengaduan <i class="bi bi-caret-down-fill"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#zona1">SK Pengaduan</a></li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">RTL Pengaduan</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Mekanisme Pengaduan</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Realisasi Pengaduan</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1"
+                    >Monitoring dan Evaluasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Bukti Tindak Lanjut</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona1">Inovasi Pengaduan</a>
+                </li>
+                <li><a class="dropdown-item" href="#zona1">Laporan SP4N</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="infolain"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Informasi Lainnya <i class="bi bi-caret-down-fill"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="mediapublikasi.html"
+                    data-content="mediapublikasi.html"
+                    >Media Publikasi</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="inovasi.html"
+                data-content="inovasi.html"
+                >Inovasi</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="penilaian"
+                role="button"
+                data-bs-toggle="dropdown"
+                >Penilaian <i class="bi bi-caret-down-fill"></i
+              ></a>
+              <ul class="dropdown-menu" aria-labelledby="penilaian">
+                <li><a class="dropdown-item" href="#laporan">Akreditasi</a></li>
+                <li class="dropdown-submenu">
+                  <a class="dropdown-item dropdown-toggle" href="#">PZI</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://pkmtrenggalek.github.io/LKEZI2025/"
+                        target="_blank"
+                        >PZI 2025</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://docs.google.com/spreadsheets/d/1XCgjolYcnoA0s2QMqwlZvcPiTHG04vDvl8m-nd-qZu4/edit?gid=1333792916#gid=1333792916"
+                        target="_blank"
+                        >PZI 2024</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="dropdown-item" href="#pkp">PKP</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="prioritas_nasional"
+                role="button"
+                data-bs-toggle="dropdown"
+                >Program Prioritas Nasional <i class="bi bi-caret-down-fill"></i
+              ></a>
+              <ul class="dropdown-menu" aria-labelledby="prioritas_nasional">
+                <li class="dropdown-submenu">
+                  <a class="dropdown-item dropdown-toggle" href="#">ILP CKG</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href=""
+                        data-content="ckg.html"
+                        target="_blank"
+                        >CKG</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#" target="_blank">ILP</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="infografis"
+                role="button"
+                data-bs-toggle="dropdown"
+                >Info Grafis <i class="bi bi-caret-down-fill"></i
+              ></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#zona1">10 Besar Penyakit</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona2">Data Kunjungan</a>
+                </li>
+                <li><a class="dropdown-item" href="#zona3">Download</a></li>
+                <li>
+                  <a class="dropdown-item" href="#zona3">Register Pasien</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#zona3">Sasaran Program</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="aplikasi"
+                role="button"
+                data-bs-toggle="dropdown"
+                >Aplikasi dan Laporan <i class="bi bi-caret-down-fill"></i
+              ></a>
+              <ul class="dropdown-menu" aria-labelledby="aplikasi">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="laporan.html"
+                    data-content="laporan.html"
+                    >Laporan</a
+                  >
+                </li>
+                <li class="dropdown-submenu">
+                  <a class="dropdown-item dropdown-toggle" href="#">Aplikasi</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="Aplikasi_internal.html"
+                        data-content="Aplikasi_internal.html"
+                        >Aplikasi Internal</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#aplikasi2"
+                        >Aplikasi Eksternal</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-content="jurnal.html">Jurnal</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div
+      class="container mb-2"
+      id="contents"
+      style="padding-bottom: 80px"
+    ></div>
+    <footer class="bg-light text-dark text-center shadow p-3 pt-4 fixed-bottom">
+      <small>&copy; 2025 Puskesmas Trenggalek. All rights reserved.</small>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- AOS Initialization -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        AOS.init();
+      });
+    </script>
+
+    <script>
+      function loadContent(page, queryString = "") {
+        const contents = document.getElementById("contents");
+
+        // Kosongkan konten (tanpa spinner)
+        contents.innerHTML = "";
+
+        // Hapus semua script halaman sebelumnya
+        document
+          .querySelectorAll("script[data-page-script]")
+          .forEach((script) => script.remove());
+
+        fetch("pages/" + page)
+          .then((res) => {
+            if (!res.ok) throw new Error("Gagal memuat halaman.");
+            return res.text();
+          })
+          .then((html) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+
+            // Masukkan HTML ke kontainer
+            contents.innerHTML = doc.body.innerHTML;
+
+            // Load JS jika ada
+            const pageName = page.split(".")[0];
+            const script = document.createElement("script");
+            script.src = `pages/${pageName}.js`;
+            script.setAttribute("data-page-script", "true");
+            script.defer = true;
+
+            // Simpan query string agar bisa diakses dari halaman
+            window.pageQuery = queryString
+              ? Object.fromEntries(new URLSearchParams(queryString))
+              : {};
+
+            script.dataset.query = queryString || "";
+            document.body.appendChild(script);
+
+            // Tambahkan stylesheet dari halaman jika belum ada
+            doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
+              if (!document.querySelector(`link[href="${link.href}"]`)) {
+                const newLink = document.createElement("link");
+                newLink.rel = "stylesheet";
+                newLink.href = link.href;
+                document.head.appendChild(newLink);
+              }
+            });
+
+            // Inisialisasi Bootstrap Modal & AOS
+            if (typeof initBootstrap5Modals === "function")
+              initBootstrap5Modals();
+            if (window.AOS) AOS.init();
+          })
+          .catch((err) => {
+            contents.innerHTML = `
+              <div class="text-center mt-5">
+                <h1 class="display-3 text-danger fw-bold">Coming Soon</h1>
+                <p class="lead text-success fs-4">Halaman ini sedang dalam pengembangan.<br>Silakan kembali lagi nanti.</p>
+                <img src="assets/uc.gif" alt="Coming Soon" style="max-width: 700px; width: 700%;" class="img-fluid mt-4" />
+              </div>`;
+            console.error("Load content error:", err);
+          });
+      }
+
+      function initBootstrap5Modals() {
+        document.querySelectorAll(".modal").forEach((modalEl) => {
+          new bootstrap.Modal(modalEl);
+        });
+      }
+
+      function checkHash() {
+        let hash = location.hash.substring(1); // buang tanda "#"
+        if (!hash) hash = "home.html";
+
+        const [page, queryString] = hash.split("?");
+        loadContent(page, queryString);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        checkHash();
+
+        document.querySelectorAll("a[data-content]").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const page = link.getAttribute("data-content");
+            location.hash = page; // Contoh: profil_individu.html?nip=123
+          });
+        });
+      });
+
+      window.addEventListener("hashchange", checkHash);
+    </script>
+  </body>
+</html>
