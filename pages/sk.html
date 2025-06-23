@@ -1,0 +1,60 @@
+<div class="container py-4">
+  <h2 class="mb-4">List SK Puskesmas Trenggalek</h2><hr>
+  <button class="btn btn-outline-success mb-3 shadow" onclick="resetForm()" data-bs-toggle="modal" data-bs-target="#modalForm">Tambah SK</button>
+<div class="input-group mb-3">
+  <span class="input-group-text bg-white"><i class="fas fa-search"></i></span>
+  <input type="text" class="form-control" placeholder="Cari..." id="searchInput" />
+</div>
+
+
+  <div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead style="font-size:13px; text-align: center; ">
+      <tr>
+        <th width="250px" class="bg-warning bg-gradient">NO. DOKUMEN</th>
+        <th class="bg-warning bg-gradient">NAMA PELAYANAN/ PROGRAM</th>
+        <th class="bg-warning bg-gradient">JUDUL SK</th>
+        <th class="bg-warning bg-gradient">REVISI</th>
+        <th class="bg-warning bg-gradient">PENERBIT SK</th>
+        <th class="bg-warning bg-gradient">LINK</th>
+        <th class="bg-warning bg-gradient">AKSI</th>
+      </tr>
+    </thead>
+    <tbody id="skTableBody" style="font-size:13px">
+      <tr><td colspan="7" class="text-center">Memuat data...</td></tr>
+    </tbody>
+  </table>
+</div>
+  <!-- Toast -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+    <div id="successToast" class="toast bg-success text-white" role="alert">
+      <div class="toast-body" id="toastBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalForm" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="skForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Form SK</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="formAction" />
+        <input type="hidden" id="formIndex" />
+        <div class="mb-3"><label class="form-label">No Dokumen</label><input type="text" class="form-control" id="formNo" /></div>
+        <div class="mb-3"><label class="form-label">Nama Pelayanan / Program</label><input type="text" class="form-control" id="formPelayanan" /></div>
+        <div class="mb-3"><label class="form-label">Judul SK</label><input type="text" class="form-control" id="formJudul" /></div>
+        <div class="mb-3"><label class="form-label">Revisi</label><input type="text" class="form-control" id="formRevisi" /></div>
+        <div class="mb-3"><label class="form-label">Penerbit SK</label><input type="text" class="form-control" id="formPenerbit" /></div>
+        <div class="mb-3"><label class="form-label">File PDF</label><input type="file" class="form-control" id="formFile" accept="application/pdf" /></div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+      </div>
+    </form>
+  </div>
+</div>
