@@ -25,6 +25,8 @@
       href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
       rel="stylesheet"
     />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -421,119 +423,167 @@
             <li class="nav-item">
               <a class="nav-link" href="#" data-content="jurnal.html">Jurnal</a>
             </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="aplikasi"
+                role="button"
+                data-bs-toggle="dropdown"
+                >Dokumen Internal<i class="bi bi-caret-down-fill"></i
+              ></a>
+              <ul class="dropdown-menu" aria-labelledby="aplikasi">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="sk.html"
+                    data-content="sk.html"
+                    >SK</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="pedomaninternal.html"
+                    data-content="pedomaninternal.html"
+                    >pedomaninternal</a
+                  >
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
+
       </div>
+
     </nav>
+
     <div
       class="container mb-2"
       id="contents"
       style="padding-bottom: 80px"
     ></div>
+    <div id="loadingOverlay">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
     <footer class="bg-light text-dark text-center shadow p-3 pt-4 fixed-bottom">
       <small>&copy; 2025 Puskesmas Trenggalek. All rights reserved.</small>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- AOS Initialization -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        AOS.init();
-      });
-    </script>
+    
 
     <script>
-      function loadContent(page, queryString = "") {
-        const contents = document.getElementById("contents");
+          function showLoading() {
+    document.getElementById("loadingOverlay").style.display = "flex";
+  }
 
-        // Kosongkan konten (tanpa spinner)
-        contents.innerHTML = "";
+  function hideLoading() {
+    document.getElementById("loadingOverlay").style.display = "none";
+  }
 
-        // Hapus semua script halaman sebelumnya
-        document
-          .querySelectorAll("script[data-page-script]")
-          .forEach((script) => script.remove());
+  function loadContent(page, queryString = "") {
+    const contents = document.getElementById("contents");
+    showLoading(); // Tampilkan efek loading
 
-        fetch("pages/" + page)
-          .then((res) => {
-            if (!res.ok) throw new Error("Gagal memuat halaman.");
-            return res.text();
-          })
-          .then((html) => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
+    contents.innerHTML = "";
 
-            // Masukkan HTML ke kontainer
-            contents.innerHTML = doc.body.innerHTML;
+    // Hapus semua script sebelumnya
+    document
+      .querySelectorAll("script[data-page-script]")
+      .forEach((script) => script.remove());
 
-            // Load JS jika ada
-            const pageName = page.split(".")[0];
-            const script = document.createElement("script");
-            script.src = `pages/${pageName}.js`;
-            script.setAttribute("data-page-script", "true");
-            script.defer = true;
+    fetch("pages/" + page)
+      .then((res) => {
+        if (!res.ok) throw new Error("Gagal memuat halaman.");
+        return res.text();
+      })
+      .then((html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
 
-            // Simpan query string agar bisa diakses dari halaman
-            window.pageQuery = queryString
-              ? Object.fromEntries(new URLSearchParams(queryString))
-              : {};
+        contents.innerHTML = doc.body.innerHTML;
 
-            script.dataset.query = queryString || "";
-            document.body.appendChild(script);
+        // Load script halaman jika ada
+        const pageName = page.split(".")[0];
+        const script = document.createElement("script");
+        script.src = `pages/${pageName}.js`;
+        script.setAttribute("data-page-script", "true");
+        script.defer = true;
 
-            // Tambahkan stylesheet dari halaman jika belum ada
-            doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
-              if (!document.querySelector(`link[href="${link.href}"]`)) {
-                const newLink = document.createElement("link");
-                newLink.rel = "stylesheet";
-                newLink.href = link.href;
-                document.head.appendChild(newLink);
-              }
-            });
+        // Simpan query string
+        window.pageQuery = queryString
+          ? Object.fromEntries(new URLSearchParams(queryString))
+          : {};
+        script.dataset.query = queryString || "";
+        document.body.appendChild(script);
 
-            // Inisialisasi Bootstrap Modal & AOS
-            if (typeof initBootstrap5Modals === "function")
-              initBootstrap5Modals();
-            if (window.AOS) AOS.init();
-          })
-          .catch((err) => {
-            contents.innerHTML = `
-              <div class="text-center mt-5">
-                <h1 class="display-3 text-danger fw-bold">Coming Soon</h1>
-                <p class="lead text-success fs-4">Halaman ini sedang dalam pengembangan.<br>Silakan kembali lagi nanti.</p>
-                <img src="assets/uc.gif" alt="Coming Soon" style="max-width: 700px; width: 700%;" class="img-fluid mt-4" />
-              </div>`;
-            console.error("Load content error:", err);
-          });
-      }
-
-      function initBootstrap5Modals() {
-        document.querySelectorAll(".modal").forEach((modalEl) => {
-          new bootstrap.Modal(modalEl);
+        // Tambahkan stylesheet dari halaman jika belum ada
+        doc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
+          if (!document.querySelector(`link[href="${link.href}"]`)) {
+            const newLink = document.createElement("link");
+            newLink.rel = "stylesheet";
+            newLink.href = link.href;
+            document.head.appendChild(newLink);
+          }
         });
-      }
 
-      function checkHash() {
-        let hash = location.hash.substring(1); // buang tanda "#"
-        if (!hash) hash = "home.html";
-
-        const [page, queryString] = hash.split("?");
-        loadContent(page, queryString);
-      }
-
-      window.addEventListener("DOMContentLoaded", () => {
-        checkHash();
-
-        document.querySelectorAll("a[data-content]").forEach((link) => {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const page = link.getAttribute("data-content");
-            location.hash = page; // Contoh: profil_individu.html?nip=123
-          });
-        });
+        // Inisialisasi AOS dan Modal Bootstrap
+        if (typeof initBootstrap5Modals === "function") initBootstrap5Modals();
+        if (window.AOS) AOS.init();
+      })
+      .catch((err) => {
+        contents.innerHTML = `
+          <div class="text-center mt-5">
+            <h1 class="display-3 text-danger fw-bold">Coming Soon</h1>
+            <p class="lead text-success fs-4">Halaman ini sedang dalam pengembangan.<br>Silakan kembali lagi nanti.</p>
+            <img src="assets/uc.gif" alt="Coming Soon" style="max-width: 700px;" class="img-fluid mt-4" />
+          </div>`;
+        console.error("Load content error:", err);
+      })
+      .finally(() => {
+        hideLoading(); // Sembunyikan loading
       });
+  }
 
-      window.addEventListener("hashchange", checkHash);
+  function initBootstrap5Modals() {
+    document.querySelectorAll(".modal").forEach((modalEl) => {
+      new bootstrap.Modal(modalEl);
+    });
+  }
+
+  function checkHash() {
+    let hash = location.hash.substring(1);
+    if (!hash) hash = "home.html";
+    const [page, queryString] = hash.split("?");
+    loadContent(page, queryString);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    checkHash();
+
+    // Klik link yang memuat konten dinamis
+    document.querySelectorAll("a[data-content]").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const page = link.getAttribute("data-content");
+        location.hash = page;
+      });
+    });
+
+    // Tutup navbar hanya jika menu bukan dropdown
+    $('.navbar-nav a').on('click', function () {
+      if (!$(this).hasClass('dropdown-toggle') && $('.navbar-toggler').is(':visible')) {
+        $('.navbar-collapse').collapse('hide');
+      }
+    });
+  });
+
+  window.addEventListener("hashchange", checkHash);
     </script>
+
   </body>
 </html>
