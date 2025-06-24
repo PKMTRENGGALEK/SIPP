@@ -467,11 +467,11 @@
       id="contents"
       style="padding-bottom: 80px"
     ></div>
-    <!-- <div id="loadingOverlay">
+    <div id="loadinggue">
       <div class="spinner-border text-success" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
-    </div> -->
+    </div>
 
     <footer class="bg-light text-dark text-center shadow p-3 pt-4 fixed-bottom">
       <small>&copy; 2025 Puskesmas Trenggalek. All rights reserved.</small>
@@ -481,16 +481,16 @@
 
     <script>
       function showLoading() {
-        document.getElementById("loadingOverlay").style.display = "flex";
+        document.getElementById("loadinggue").style.display = "flex";
       }
 
       function hideLoading() {
-        document.getElementById("loadingOverlay").style.display = "none";
+        document.getElementById("loadinggue").style.display = "none";
       }
 
       function loadContent(page, queryString = "") {
         const contents = document.getElementById("contents");
-        // showLoading();
+        showLoading();
 
         contents.innerHTML = "";
 
