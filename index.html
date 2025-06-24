@@ -462,13 +462,16 @@
       </div>
     </nav>
 
-    <div class="container mb-2" id="contents" style="padding-bottom: 80px">
-      <div id="loadinggue" class="justify-content-center">
-        <div class="spinner-border text-success" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+    <div
+      class="container mb-2"
+      id="contents"
+      style="padding-bottom: 80px"
+    > <div id="loadingOverlay">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
-    </div>
+    </div></div>
+   
 
     <footer class="bg-light text-dark text-center shadow p-3 pt-4 fixed-bottom">
       <small>&copy; 2025 Puskesmas Trenggalek. All rights reserved.</small>
@@ -478,16 +481,16 @@
 
     <script>
       function showLoading() {
-        document.getElementById("loadinggue").style.display = "flex";
+        document.getElementById("loadingOverlay").style.display = "flex";
       }
 
       function hideLoading() {
-        document.getElementById("loadinggue").style.display = "none";
+        document.getElementById("loadingOverlay").style.display = "none";
       }
 
       function loadContent(page, queryString = "") {
         const contents = document.getElementById("contents");
-        showLoading();
+        showLoading(); // Tampilkan efek loading
 
         contents.innerHTML = "";
 
